@@ -156,7 +156,7 @@ def main():
     cookies = get_cookies()
     if not cookies: sys.exit(1)
     
-    target_plan = os.environ.get("GLADOS_EXCHANGE_PLAN", "plan500")
+    target_plan = os.environ.get("GLADOS_EXCHANGE_PLAN", "plan200")
     plan_requirements = {"plan100": 100, "plan200": 200, "plan500": 500}
     need_pts = plan_requirements.get(target_plan, 500)
     
