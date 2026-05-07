@@ -116,6 +116,7 @@ koa:sess=eyJ1c2VySWQiOjEyMzQ1Njc4OTB9; koa:sess.sig=abcdef123456
 | `GLADOS_COOKIE`  | 第二步组合的 Cookie      | ✅ 是 |
 | `TELEGRAM_BOT_TOKEN` |  | ❌ 否 |
 | `TELEGRAM_CHAT_ID` |  | ❌ 否 |
+| `GLADOS_EXCHANGE_PLAN` |  | ❌ 否 |
 ---
 
 
