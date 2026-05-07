@@ -250,41 +250,6 @@ koa:sess=eyJ1c2VySWQiOjEyMzQ1Njc4OTB9; koa:sess.sig=abcdef123456
 
 ---
 
-## 🤝 需要帮助？
-
-- 📝 **提 Issue**：遇到问题请提 Issue，作者很乐意帮助技术新手！
-- ⭐ **Star**：如果对你有帮助，请点个 Star 支持一下
-- 🍴 **Fork**：欢迎 Fork 并贡献代码
-
----
-
-## 📝 更新日志
-
-### v1.1.0 (2026-01-25) 🔥 重大修复
-
-**问题**：签到始终返回 "please checkin via https://glados.cloud"，导致机器人无法签到。
-
-**原因**：GLaDOS 官方更新了 API，签到 token 必须从 `glados.one` 改为 `glados.cloud`。
-
-**修复**：更新 [checkin.py](file://d:\workplace\2026-glados-checkin\checkin.py) 中的 token 参数。
-
-**排查过程**：
-
-1. 使用浏览器 DevTools 抓包分析真实签到请求
-2. 对比 Python 脚本与浏览器请求的差异
-3. 尝试添加 Headers、模拟 TLS 指纹等方案（均无效）
-4. 最终通过测试不同 token 值发现问题根源
-
-> 💡 如果你在使用其他签到项目遇到同样问题，可以参考本项目的修复方案！
-
-### v1.0.0 (2026-01-20)
-
-- 初始版本发布
-- 支持 glados.cloud 域名
-- PushPlus 微信推送
-- GitHub Actions 自动签到
-
----
 
 ## 📝 License
 
