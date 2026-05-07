@@ -34,7 +34,7 @@
 | --------------- | ------------------------------- |
 | 🎯 **精准积分** | 获取真实积分数据 + 每日变化量   |
 | 🎁 **兑换提示** | 显示当前可兑换选项及差额        |
-| 📱 **tg推送** | PushPlus 漂亮 HTML 报告           |
+| 📱 **tg推送**   | 漂亮 HTML 报告           |
 
 ---
 
@@ -135,9 +135,8 @@ koa:sess=eyJ1c2VySWQiOjEyMzQ1Njc4OTB9; koa:sess.sig=abcdef123456
 
 1. 访问 [https://github.com/settings/tokens](https://github.com/settings/tokens)
 2. 点击 **Generate new token** → **Generate new token (classic)**
-3. 按下图配置：
+3. 按如下配置：
 
-![GitHub Token 设置](images/github_access_tokens.png)
 
 | 选项           | 值                              |
 | -------------- | ------------------------------- |
