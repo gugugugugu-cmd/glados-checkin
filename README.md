@@ -48,7 +48,7 @@
 | `GLADOS_COOKIE`      | ✅ 是 | GLaDOS 的 Cookie。多个账号请用 `&` 或换行符分隔。                          |
 | `TELEGRAM_BOT_TOKEN` | ❌ 否 | Telegram 机器人的 Token（例如 `123456:ABC-DEF1234...`）                    |
 | `TELEGRAM_CHAT_ID`   | ❌ 否 | 接收推送的 Telegram Chat ID                                                |
-| `GLADOS_EXCHANGE_PLAN`         | ❌ 否 | 配置自动兑换积分策略 |
+| `GLADOS_EXCHANGE_PLAN`         | ❌ 否 | 配置自动兑换积分策略 plan100 plan200 plan500|
 
 ---
 
