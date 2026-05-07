@@ -10,7 +10,7 @@
 
 ![签到成功示例](images/success.jpg)
 
-> **每天签到能获得 +12 ~ +20 积分，累积可兑换会员时长！**
+> **每天签到累积可兑换会员时长！**
 
 ---
 
@@ -34,8 +34,7 @@
 | --------------- | ------------------------------- |
 | 🎯 **精准积分** | 获取真实积分数据 + 每日变化量   |
 | 🎁 **兑换提示** | 显示当前可兑换选项及差额        |
-| 📱 **tg推送** | PushPlus 漂亮 HTML 报告         |
-| ☁️ **2026 API** | 适配最新 glados.cloud API       |
+| 📱 **tg推送** | PushPlus 漂亮 HTML 报告           |
 
 ---
 
@@ -71,7 +70,6 @@ Chrome：Application → Cookies
 Firefox：存储 → Cookies
 选择 glados.cloud
 复制完整 Cookie 内容
-示例（示意）：
 
 koa:sess=xxxxxx; koa:sess.sig=yyyyyy
 ⚠️ 必须是完整的一整段，不要只复制一半
@@ -107,9 +105,8 @@ koa:sess=eyJ1c2VySWQiOjEyMzQ1Njc4OTB9; koa:sess.sig=abcdef123456
 3. 左侧菜单找到 **Secrets and variables** → **Actions**
 4. 点击右上角 **New repository secret**
 
-![添加 Secret](images/add-secret.png)
 
-添加以下三个 Secret：
+添加以下四个 Secret：
 
 | Name             | Value                    | 必需  |
 | ---------------- | ------------------------ | ----- |
@@ -127,7 +124,6 @@ koa:sess=eyJ1c2VySWQiOjEyMzQ1Njc4OTB9; koa:sess.sig=abcdef123456
 3. 点击左侧的 **GLaDOS  Checkin**
 4. 点击右侧 **Run workflow** 按钮手动测试一次
 
-![启用 Actions](images/workflow.png)
 
 
 ---
@@ -170,9 +166,9 @@ koa:sess=eyJ1c2VySWQiOjEyMzQ1Njc4OTB9; koa:sess.sig=abcdef123456
 | 选项      | 填写                                                                                                   |
 | --------- | ------------------------------------------------------------------------------------------------------ |
 | **Title** | `GLaDOS 签到`                                                                                        |
-| **URL**   | `https://api.github.com/repos/你的用户名/2026-glados-checkin/actions/workflows/checkin.yml/dispatches` |
+| **URL**   | `[https://api.github.com/repos/你的用户名/glados-checkin/actions/workflows/checkin.yml/dispatches`|
 
-> ⚠️ **重要**：把 `你的用户名` 改成你的 GitHub 用户名！比如 `lankerr`
+> ⚠️ **重要**：把 `你的用户名` 改成你的 GitHub 用户名！`
 
 **执行时间**：选择每天 **07:00**（Asia/Shanghai 时区）
 
@@ -259,10 +255,8 @@ MIT
 
 <div align="center">
 
-**Made with ❤️ for GLaDOS users in 2026**
 
-**🔧 本项目经过 2026-04-20 验证，确认可用！**
+**🔧 本项目经过 2026-05-07 验证可用！**
 
-**⭐ Star 一下，支持作者持续更新！⭐**
 
 </div>
