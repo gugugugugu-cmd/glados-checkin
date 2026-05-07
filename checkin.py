@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-2026 GLaDOS 自动签到 (排版修复版 - 全行间距)
+2026 GLaDOS 自动签到 (排版修复终极版 - 补全信息+全行空行)
 """
 
 import requests
@@ -123,7 +123,6 @@ class GLaDOS:
                 desc = "(可兑换)" if pts >= need else f"(差{need-pts}分)"
                 exchange_lines.append(f"{status} {need}分→{days}天 {desc}")
             
-            # 兑换选项内部保持紧凑
             self.exchange_info = "\n".join(exchange_lines)
             return True
         return False
@@ -141,9 +140,9 @@ def telegram_push(token, chat_id, title, content):
     try:
         import re
         url = f"https://api.telegram.org/bot{token}/sendMessage"
-        # 标题后空两行
+        # 标题与第一个用户名之间空一行
         text = f"<b>{title}</b>\n\n{content}"
-        # 清理不必要的 HTML
+        # 彻底移除所有残留的 HTML 标签（保留粗体）
         text = re.sub(r"<(?!\/?(b)\b)[^>]+>", "", text)
         
         data = {"chat_id": chat_id, "text": text, "parse_mode": "HTML"}
@@ -177,17 +176,19 @@ def main():
         if current_pts >= need_pts:
             ex_res = g.exchange(target_plan)
             exchange_msg = ex_res.get('message', '提交失败')
+            # 兑换后更新状态
             g.get_status()
             g.get_points()
 
         success_cnt += 1
         
-        # 核心修复点：在每一行之间显式加入 \n\n
+        # 精确每一行之间留一行空行 (\n\n)
         user_result = (
             f"👤 {g.email}\n\n"
             f"当前积分: {g.points} ({g.points_change})\n\n"
             f"剩余天数: {g.left_days} 天\n\n"
             f"签到结果: Today's observation logged.\n\n"
+            f"自动兑换: {exchange_msg}\n\n"
             f"🎁 兑换选项:\n\n"
             f"{g.exchange_info}"
         )
@@ -198,8 +199,9 @@ def main():
     
     if tg_token and tg_chat_id:
         title = f"GLaDOS签到: 成功{success_cnt}/{len(cookies)}"
-        # 时间前也空出一行
-        content = "\n\n".join(results) + f"\n\n时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        cur_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # 结尾补上策略和时间，并保持空行间距
+        content = "\n\n".join(results) + f"\n\n策略: {target_plan} | 时间: {cur_time}"
         telegram_push(tg_token, tg_chat_id, title, content)
 
 if __name__ == '__main__':
