@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-2026 GLaDOS 自动签到 (排版修复版)
+2026 GLaDOS 自动签到 (排版标准版 - 保留一行空格)
 """
 
 import requests
@@ -115,7 +115,6 @@ class GLaDOS:
             pts = int(self.points)
             exchange_lines = []
             
-            # 排序确保 100 -> 200 -> 500 顺序
             sorted_plans = sorted(plans.items(), key=lambda x: x[1]['points'])
             
             for plan_id, plan_data in sorted_plans:
@@ -127,7 +126,7 @@ class GLaDOS:
                 else:
                     status = "❌"
                     desc = f"(差{need-pts}分)"
-                # 修复对齐：直接以符号开头，不加行首空格
+                # 修复对齐：直接以符号开头
                 exchange_lines.append(f"{status} {need}分→{days}天 {desc}")
             
             self.exchange_info = "<br>".join(exchange_lines)
@@ -156,12 +155,15 @@ def telegram_push(token, chat_id, title, content):
     try:
         import re
         url = f"https://api.telegram.org/bot{token}/sendMessage"
-        # 修复顶部空白：确保 title 和 content 之间紧凑连接
+        # 修复点：标题与内容之间保持一行空格
         text = f"<b>{title}</b>\n\n{content}".replace("<br>", "\n")
-        # 清理多余的 HTML 标签和行首空格
+        
+        # 提取 HTML 文本
         text = re.sub(r"<(?!\/?(b|i|u|s|a|code|pre)\b)[^>]+>", "", text)
-        # 移除每一行行首的空格缩进，确保左对齐
-        text = "\n".join([line.strip() for line in text.split("\n")])
+        
+        # 规范化每一行，移除行首空格
+        lines = [line.strip() for line in text.split("\n")]
+        text = "\n".join(lines)
         
         data = {"chat_id": chat_id, "text": text, "parse_mode": "HTML"}
         requests.post(url, json=data, timeout=5)
@@ -207,27 +209,27 @@ def main():
         log(f"用户: {g.email} | 积分: {g.points} | 兑换: {exchange_msg}")
         if "Checkin" in msg: success_cnt += 1
         
-        # HTML 模板去除冗余空格
+        # HTML 模板修复点：
+        # 1. 👤 前加了 <br>，确保和标题/上一用户之间有空格
+        # 2. 🎁 前加了 <br>，确保和自动兑换行之间有空格
         results.append(f"""<div style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
-👤 {g.email}<br>
+<br>👤 {g.email}<br>
 当前积分: {g.points} ({g.points_change})<br>
 剩余天数: {g.left_days} 天<br>
 签到结果: {msg}<br>
 自动兑换: {exchange_msg}<br>
-<br>
-🎁 兑换进度:<br>
-{g.exchange_info}
-</div>""")
+<br>🎁 兑换进度:<br>
+{g.exchange_info}</div>""")
 
     ptoken = os.environ.get("PUSHPLUS_TOKEN")
     tg_token = os.environ.get("TELEGRAM_BOT_TOKEN")
     tg_chat_id = os.environ.get("TELEGRAM_CHAT_ID")
     
     if ptoken or (tg_token and tg_chat_id):
-        # 确保标题前没有任何字符
         title = f"GLaDOS签到: 成功{success_cnt}/{len(cookies)}"
-        # 移除 content 拼接时的前导换行
-        content = "".join(results).strip() + f"<br>策略: {target_plan} | 时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        # 确保整体内容的首尾没有杂乱空格
+        content = "".join(results).strip() + f"<br><br>策略: {target_plan} | 时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        
         if ptoken: pushplus(ptoken, title, content)
         if tg_token and tg_chat_id: telegram_push(tg_token, tg_chat_id, title, content)
 
