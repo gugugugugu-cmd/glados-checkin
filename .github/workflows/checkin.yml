@@ -1,13 +1,13 @@
-name: GLaDOS  Checkin
+name: GLaDOS Checkin
 
 on:
-    workflow_dispatch:  # 允许手动触发
-  
+  workflow_dispatch:  # 允许手动触发
+
 jobs:
   checkin:
     runs-on: ubuntu-latest
-    # 随机等待 30 分钟，总超时设为 50 分钟足够了
-    timeout-minutes: 50
+    # 最长随机等待 10 分钟，加上执行和重试时间，20 分钟足够
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -23,9 +23,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Random Wait
-        # 随机等待 1 到 1800 秒（即 30 分钟内随机）
         run: |
-          wait_time=$((1 + RANDOM % 1800))
+          wait_time=$((1 + RANDOM % 600))
           echo "为了模拟真人行为，随机等待 ${wait_time} 秒后执行..."
           sleep ${wait_time}
 
@@ -34,6 +33,7 @@ jobs:
         timeout-minutes: 5
         env:
           GLADOS_COOKIE: ${{ secrets.GLADOS_COOKIE }}
+          GLADOS_EXCHANGE_PLAN: ${{ secrets.GLADOS_EXCHANGE_PLAN }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -47,6 +47,7 @@ jobs:
         timeout-minutes: 5
         env:
           GLADOS_COOKIE: ${{ secrets.GLADOS_COOKIE }}
+          GLADOS_EXCHANGE_PLAN: ${{ secrets.GLADOS_EXCHANGE_PLAN }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
